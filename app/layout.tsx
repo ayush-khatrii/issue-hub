@@ -3,6 +3,7 @@ import "./globals.css";
 import { Poppins } from "next/font/google"
 import { NextUIProvider } from "@nextui-org/react";
 import NavBar from "@/app/NavBar";
+import { Toaster } from "react-hot-toast";
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -23,10 +24,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      className={`${poppins.variable}`}
       suppressHydrationWarning>
       <body>
+        <Toaster />
         <NextUIProvider>
-          <main className={`${poppins.variable}`}>
+          <main>
             <NavBar />
             <section className="max-w-7xl mx-auto">
               {children}

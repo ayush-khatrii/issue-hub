@@ -82,7 +82,7 @@ export default function NavBar() {
         <div className="flex justify-between h-16">
           <div className="flex-shrink-0 flex items-center">
             <Link href="/" className="flex items-center justify-center">
-              <PiBugDroidFill size={20} className="text-blue-600 dark:text-blue-400" />
+              <PiBugDroidFill size={20} className="" />
               <p className="font-black text-xl dark:text-white">hub</p>
             </Link>
           </div>
