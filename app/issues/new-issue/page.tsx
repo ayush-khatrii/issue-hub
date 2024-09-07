@@ -9,8 +9,7 @@ import toast from "react-hot-toast";
 import { z } from "zod";
 import { createIssueSchema } from "@/app/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import ErrorMessage from "@/app/components/ErrorMessage";
-
+import ErrorMessage from "@/components/ErrorMessage";
 
 type Inputs = z.infer<typeof createIssueSchema>;
 

@@ -4,7 +4,7 @@ import React from 'react'
 const page = () => {
   return (
     <>
-      <section>page</section>
+      <section className='my-20 font-bold'>Home page</section>
     </>
   )
 }
