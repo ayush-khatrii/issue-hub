@@ -5,6 +5,7 @@ import { NextUIProvider } from "@nextui-org/react";
 import NavBar from "@/app/NavBar";
 import { Toaster } from "react-hot-toast";
 import { SessionProvider } from "next-auth/react";
+import { Providers } from "@/providers";
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -30,7 +31,7 @@ export default function RootLayout({
           className={`${poppins.variable}`}
           suppressHydrationWarning>
           <body>
-            <NextUIProvider>
+            <Providers>
               <Toaster />
               <main>
                 <NavBar />
@@ -38,10 +39,10 @@ export default function RootLayout({
                   {children}
                 </section>
               </main>
-            </NextUIProvider>
+            </Providers>
           </body>
         </html>
-      </SessionProvider>
+      </SessionProvider >
     </>
   );
 }
