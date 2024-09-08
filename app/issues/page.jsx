@@ -1,10 +1,17 @@
-import { Button } from "@nextui-org/button"; import { Input } from "@nextui-org/react";
+import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { RiSearchLine } from "react-icons/ri";
-export default function Issues() {
+import IssueTable from "@/components/IssueTable";
+import { Input } from "@nextui-org/react";
+import prisma from "@/prisma/client";
+
+export default async function Issues() {
+
+  const allIssues = await prisma.issue.findMany();
+  console.log(allIssues); 
   return (
     <>
-      <section className="my-10">
+      <section className="my-10 px-3">
         {/* <h1>Issues</h1> */}
         <div className="flex justify-center items-center gap-5">
           <Input
@@ -24,6 +31,9 @@ export default function Issues() {
               New Issue
             </Link>
           </Button>
+        </div>
+        <div className="my-5">
+          <IssueTable issues={allIssues} />
         </div>
       </section>
     </>

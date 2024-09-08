@@ -57,7 +57,7 @@ export default function NavBar() {
                     <h1 className="font-medium">{session.user?.email}</h1>
                     <p className="opacity-70">{session.user?.name}</p>
                   </DropdownItem>
-                  <DropdownItem>
+                  <DropdownItem key="signout">
                     <form action={handleSignOut}>
                       <Button type="submit" variant="ghost">
                         <IoIosLogOut /> Sign Out
