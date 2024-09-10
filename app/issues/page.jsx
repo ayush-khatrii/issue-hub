@@ -8,7 +8,6 @@ import prisma from "@/prisma/client";
 export default async function Issues() {
 
   const allIssues = await prisma.issue.findMany();
-  console.log(allIssues); 
   return (
     <>
       <section className="my-10 px-3">

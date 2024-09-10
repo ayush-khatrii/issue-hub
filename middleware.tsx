@@ -1,10 +1,7 @@
 import { NextResponse } from 'next/server';
 import { auth } from "@/auth"
 
-console.log("hello middlewaref")
 export default auth((req) => {
-  console.log("hello middleware below!!")
-  console.log("ROUTE::: ", req.nextUrl.pathname);
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
 

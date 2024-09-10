@@ -1,0 +1,58 @@
+import { createIssueSchema } from "@/app/validationSchemas";
+import { auth } from "@/auth";
+import prisma from "@/prisma/client";
+import { NextRequest, NextResponse } from "next/server";
+
+// Patch route for updating an issue
+export async function PATCH(req: NextRequest) {
+  try {
+    const session = await auth();
+    if (!session) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    const body = await req.json();
+    const validatedData = createIssueSchema.safeParse(body);
+
+    if (!validatedData.success) {
+      return NextResponse.json(validatedData.error.format(), { status: 400 });
+    }
+    // update issue
+    const updatedIssue = await prisma.issue.update({
+      where: {
+        id: body.id
+      },
+      data: {
+        title: body.title,
+        description: body.description
+      }
+    });
+    console.log(updatedIssue);
+    return NextResponse.json(updatedIssue, { status: 200 });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Something went wrong" },
+      { status: 500 }
+    );
+  }
+}
+
+// Delete route for deleting an issue
+export async function DELETE(req: NextRequest) {
+  const session = await auth();
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  try {
+    const body = await req.json();
+    const deletedIssue = await prisma.issue.delete({
+      where: {
+        id: body.id
+      }
+    });
+    return NextResponse.json(deletedIssue, { status: 200 });
+  } catch (error: any) {
+    return NextResponse.json(`Server Error: ${error.message}`, {
+      status: 500,
+    })
+  }
+}

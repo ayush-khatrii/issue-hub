@@ -9,12 +9,12 @@ import { Avatar, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger }
 import { useSession } from "next-auth/react";
 import { handleSignOut } from "@/app/actions/authActions";
 import { IoIosLogOut } from "react-icons/io";
-
+import { Skeleton } from "@nextui-org/skeleton";
 
 export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const currentPathName = usePathname();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   return (
     <nav className=" border-b dark:border-zinc-400 border-zinc-200 relative top-0 z-50 w-full ">
@@ -67,6 +67,7 @@ export default function NavBar() {
                 </DropdownMenu>
               </Dropdown>
             )}
+            {status === "loading" && <Skeleton />}
           </div>
           <div className="sm:hidden flex items-center">
             <button
