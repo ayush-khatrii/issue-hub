@@ -1,4 +1,3 @@
-import { signIn } from "@/auth"
 import { Button } from "@nextui-org/react"
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
@@ -9,7 +8,7 @@ const SignInPage = () => {
   return (
     <div className="w-full min-h-screen flex justify-center items-center p-4">
       <div className="w-full max-w-md p-6 bg-zinc-100 border dark:border-zinc-600 border-zinc-300 dark:bg-gray-800 rounded-lg">
-        <div className="flex flex-col items-center text-center justify-center mb-6">
+        <div className= "flex flex-col items-center text-center justify-center mb-6">
           <PiBugDroidFill size={25} />
           <span className="font-medium my-5">
             Login to  IssueHub

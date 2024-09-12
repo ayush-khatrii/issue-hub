@@ -25,7 +25,7 @@ export default function IssueDetails({ issue }: { issue: IssueType }) {
       </div>
       <div className="flex gap-3 flex-shrink-0 flex-col w-full md:w-auto">
         <AssignIssue />
-        <EditIssue />
+        <EditIssue id={issue.id} />
         <DeleteIssue id={issue.id} />
       </div>
     </section>
