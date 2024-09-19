@@ -7,19 +7,21 @@ import Link from "next/link";
 export default function IssueTable({ issues }: { issues: IssueType[] }) {
   return (
     <Table
-      radius="sm"
+      // className="border" 
       removeWrapper
       isHeaderSticky
     >
-      <TableHeader>
+      <TableHeader className="">
         <TableColumn className="text-base text-black">Issue</TableColumn>
-        <TableColumn className="text-base text-black" >Status</TableColumn>
+        <TableColumn className="text-base text-black">Status</TableColumn>
         <TableColumn className="text-base text-black">Created At</TableColumn>
       </TableHeader>
-      <TableBody>
+      <TableBody
+        // className="border"
+      >
         {
           issues.map((issue: IssueType) => (
-            <TableRow key={issue.id} className="hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-sm">
+            <TableRow key={issue.id} className="border hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-sm">
               <TableCell>
                 <Link href={`/issues/${issue.id}`} className="hover:text-blue-600 hover:underline">
                   {issue.title}

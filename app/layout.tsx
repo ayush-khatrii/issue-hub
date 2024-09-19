@@ -4,8 +4,7 @@ import { Poppins } from "next/font/google"
 import { NextUIProvider } from "@nextui-org/react";
 import NavBar from "@/app/NavBar";
 import { Toaster } from "react-hot-toast";
-import { SessionProvider } from "next-auth/react";
-import { Providers } from "@/providers";
+import { Providers } from "@/app/providers";
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -25,24 +24,22 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <SessionProvider>
-        <html
-          lang="en"
-          className={`${poppins.variable}`}
-          suppressHydrationWarning>
-          <body>
-            <Providers>
-              <Toaster />
-              <main>
-                <NavBar />
-                <section className="max-w-7xl mx-auto">
-                  {children}
-                </section>
-              </main>
-            </Providers>
-          </body>
-        </html>
-      </SessionProvider >
+      <html
+        lang="en"
+        className={`${poppins.variable}`}
+        suppressHydrationWarning>
+        <body>
+          <Providers>
+            <Toaster />
+            <main>
+              <NavBar />
+              <section className="max-w-7xl mx-auto">
+                {children}
+              </section>
+            </main>
+          </Providers>
+        </body>
+      </html>
     </>
   );
 }
