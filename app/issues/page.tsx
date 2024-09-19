@@ -6,7 +6,6 @@ import { Input } from "@nextui-org/react";
 import prisma from "@/prisma/client";
 
 export default async function Issues() {
-
   const allIssues = await prisma.issue.findMany();
   return (
     <>

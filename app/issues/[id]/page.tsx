@@ -16,7 +16,7 @@ export default async function SingleIssuePage({ params }: Props) {
 
   const issue = await getIssue(parseInt(params.id));
 
-  if (!issue) return notFound();
+  if (!issue) notFound();
 
   return (
     <section className='px-5'>
