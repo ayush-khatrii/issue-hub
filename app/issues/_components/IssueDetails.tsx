@@ -1,6 +1,5 @@
 "use client"
 import IssueBadge from '@/components/IssueBadge'
-import Markdown from 'react-markdown'
 import { MdOutlineDateRange } from "react-icons/md";
 import AssignIssue from '@/app/issues/[id]/AssignIssue';
 import { MdPreview } from 'md-editor-rt';

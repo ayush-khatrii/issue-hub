@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Poppins } from "next/font/google"
-import { NextUIProvider } from "@nextui-org/react";
 import NavBar from "@/app/NavBar";
 import { Toaster } from "react-hot-toast";
 import { Providers } from "@/app/providers";

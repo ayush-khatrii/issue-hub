@@ -2,14 +2,13 @@
 import { Button, Input, Tab, Tabs } from "@nextui-org/react";
 import { MdEditor, MdPreview } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
-import { useForm, SubmitHandler, Controller } from "react-hook-form"
+import { useForm, Controller } from "react-hook-form"
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { z } from "zod";
 import { createIssueSchema } from "@/app/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ErrorMessage from "@/components/ErrorMessage";
-import { Issue } from "@prisma/client";
 
 type Inputs = z.infer<typeof createIssueSchema>;
 
@@ -27,13 +26,11 @@ export default function IssueForm({ id }: { id?: number }) {
           console.log(data);
           try {
             if (id) {
-              const response = await fetch(`/api/issues/${id}`, {
+              await fetch(`/api/issues/${id}`, {
                 method: "PATCH",
                 body: JSON.stringify(data),
               });
-              console.log(response);
               toast.success("Issue updated successfully");
-              router.push("/issues");
             }
             else {
               await fetch("/api/issues", {
@@ -41,8 +38,9 @@ export default function IssueForm({ id }: { id?: number }) {
                 body: JSON.stringify(data),
               });
               toast.success("Issue created successfully");
-              router.push("/issues");
             }
+            router.push("/issues");
+            router.refresh();
           } catch (error) {
             console.log(error);
             toast.error("Something went wrong");
@@ -60,7 +58,9 @@ export default function IssueForm({ id }: { id?: number }) {
                 size={"md"}
                 {...register("title")}
               />
-              {errors.title && <ErrorMessage children={errors.title.message} />}
+              {errors.title && <ErrorMessage>
+                {errors.title.message}
+              </ErrorMessage>}
             </div>
             <div className="">
               <h1 className="text-base font-bold mb-2">Issue Description</h1>
@@ -71,7 +71,11 @@ export default function IssueForm({ id }: { id?: number }) {
                     control={control}
                     render={({ field }) => <MdEditor editorId={"editor-only"} modelValue={field.value} className="rounded-md" language="en-US" onChange={(value) => field.onChange(value)} />}
                   />
-                  {errors.description && <ErrorMessage children={errors.description.message} />}
+                  {errors.description &&
+                    <ErrorMessage>
+                      {errors.description.message}
+                    </ErrorMessage>
+                  }
                 </Tab>
                 <Tab key="preview" title="Preview">
                   <div className="w-full h-full border">
@@ -87,7 +91,11 @@ export default function IssueForm({ id }: { id?: number }) {
               </Tabs>
             </div>
           </div>
-          <Button color="danger" isLoading={isSubmitting} radius="sm" className="w-full" type="submit">Submit</Button>
+          <Button color="danger" isLoading={isSubmitting} radius="sm" className="w-full" type="submit">
+            {
+              id ? "Update Issue" : "Create New Issue"
+            }
+          </Button>
         </form>
       </section >
     </>

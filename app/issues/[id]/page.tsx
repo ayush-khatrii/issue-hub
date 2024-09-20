@@ -1,6 +1,4 @@
-import { auth } from '@/auth';
 import prisma from '@/prisma/client'
-import { getSession } from 'next-auth/react';
 import { notFound } from 'next/navigation';
 import React, { cache } from 'react'
 import IssueDetails from '../_components/IssueDetails';

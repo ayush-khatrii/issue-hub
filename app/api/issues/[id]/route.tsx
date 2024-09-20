@@ -59,8 +59,8 @@ export async function DELETE(req: NextRequest) {
       }
     });
     return NextResponse.json(deletedIssue, { status: 200 });
-  } catch (error: any) {
-    return NextResponse.json(`Server Error: ${error.message}`, {
+  } catch (error) {
+    return NextResponse.json(`Server Error: ${error}`, {
       status: 500,
     })
   }
