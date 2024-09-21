@@ -1,7 +1,14 @@
 import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import prisma from "@/prisma/client";
+
 export const config = {
+  adapter: PrismaAdapter(prisma),
   providers: [GitHub],
+  session: {
+    strategy: "jwt",
+  },
   pages: {
     signIn: "/sign-in",
   },
@@ -13,5 +20,5 @@ export const config = {
   },
   secret: process.env.AUTH_SECRET,
 };
-
+// @ts-ignore
 export const { handlers, signIn, signOut, auth } = NextAuth(config);
