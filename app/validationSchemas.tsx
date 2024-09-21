@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const createIssueSchema = z.object({
   title: z.string().min(1, "Title is required").max(255),
-  description: z.string().min(1, "Description is required"),
+  description: z.string().min(1, "Description is required").max(65535),
 });
 
 export const editIssueSchema = z.object({
@@ -14,6 +14,8 @@ export const editIssueSchema = z.object({
   description: z
     .string()
     .min(1, "Description is required.")
-    .max(50000)
+    .max(65535)
     .optional(),
+  status: z.enum(["OPEN", "IN_PROGRESS", "CLOSED"]).optional(),
+  assignedToUserId: z.string().min(1, "Assignee ID is required").optional().nullable(),
 });
