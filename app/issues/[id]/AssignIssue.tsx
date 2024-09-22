@@ -54,6 +54,15 @@ export default function AssignIssue({ issue }: { issue: Issue }) {
   if (error) return <div>Error loading users</div>;
   if (isLoading) return <SelectSkeleton />;
 
+  const selectItems = [
+    <SelectItem key="" value="">Unassigned</SelectItem>,
+    ...(users?.map((user) => (
+      <SelectItem key={user.id} value={user.id}>
+        {user.name}
+      </SelectItem>
+    )) || [])
+  ];
+
   return (
     <Select
       label="Assign to"
@@ -62,14 +71,7 @@ export default function AssignIssue({ issue }: { issue: Issue }) {
       onChange={(e) => handleAssignIssue(e.target.value)}
       className="w-full md:w-64"
     >
-      <SelectItem key="" value="">
-        Unassigned
-      </SelectItem>
-      {users?.map((user) => (
-        <SelectItem key={user.id} value={user.id}>
-          {user.name}
-        </SelectItem>
-      ))}
+      {selectItems}
     </Select>
   );
 }

@@ -6,7 +6,7 @@ declare type IssueType = {
   status: "OPEN" | "IN_PROGRESS" | "CLOSED";
   createdAt: Date;
   updatedAt: Date;
-  assignedToUserId: string;
+  assignedToUserId?: string;
 };
 
 // create issue type

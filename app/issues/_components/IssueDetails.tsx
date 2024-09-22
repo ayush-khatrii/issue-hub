@@ -5,9 +5,10 @@ import AssignIssue from '@/app/issues/[id]/AssignIssue';
 import { MdPreview } from 'md-editor-rt';
 import EditIssue from '@/app/issues/_components/EditIssue';
 import DeleteIssue from '@/app/issues/_components/DeleteIssue';
+import { Issue } from '@prisma/client';
 
 
-export default function IssueDetails({ issue }: { issue: IssueType }) {
+export default function IssueDetails({ issue }: { issue: Issue }) {
   return (
     <section className="flex my-10 flex-col md:flex-row justify-between items-start  gap-5">
       <div className="flex-1">
