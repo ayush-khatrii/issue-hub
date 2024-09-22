@@ -2,9 +2,6 @@
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Select, SelectItem } from "@nextui-org/react"
 import Link from "next/link"
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
-import { FaAngleDown } from "react-icons/fa";
-
 const IssueActions = () => {
   const router = useRouter();
 

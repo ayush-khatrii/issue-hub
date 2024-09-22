@@ -1,4 +1,3 @@
-import { Button } from "@nextui-org/react";
 import Skeleton from "react-loading-skeleton";
 
 export default function SelectSkeleton() {
