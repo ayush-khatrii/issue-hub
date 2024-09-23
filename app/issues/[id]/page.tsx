@@ -13,12 +13,15 @@ export default async function SingleIssuePage({ params }: Props) {
   // const session = await auth()
 
   const issue = await getIssue(parseInt(params.id));
+  const id = issue?.assignedToUserId || "";
+  const user = await prisma.user.findUnique({ where: { id } });
+  console.log(user);
 
   if (!issue) notFound();
 
   return (
     <section className='px-5'>
-      <IssueDetails issue={issue} />
+      <IssueDetails issue={issue} user={user?.email} />
     </section>
   )
 }
