@@ -1,5 +1,5 @@
 "use client"
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Select, SelectItem } from "@nextui-org/react"
+import { Button, Select, SelectItem } from "@nextui-org/react"
 import Link from "next/link"
 import { useRouter } from "next/navigation";
 const IssueActions = () => {
