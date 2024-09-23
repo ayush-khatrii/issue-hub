@@ -1,38 +1,42 @@
-import React, { useState } from "react";
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
-
+"use client"
+import { Button, Select, SelectItem } from "@nextui-org/react"
+import Link from "next/link"
+import { useRouter } from "next/navigation";
+import { Key, useState } from "react";
 export default function FilterStatus() {
-  const [selectedKeys, setSelectedKeys] = useState(new Set(["text"]));
+  const [selectedKeys, setSelectedKeys] = useState<Set<Key>>(new Set(["All"]));
+  const router = useRouter();
 
-  const selectedValue = React.useMemo(
-    () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
-    [selectedKeys]
-  );
+  const handleChange = (keys: Set<Key>) => {
+    setSelectedKeys(keys);
+    const status = Array.from(keys)[0] as string;
+    const query = status && status !== "All" ? `?status=${status}` : "";
+    router.push(`/issues${query}`);
+  }
+
 
   return (
-    <Dropdown>
-      <DropdownTrigger>
-        <Button
-          variant="bordered"
-          className="capitalize"
-        >
-          {selectedValue}
-        </Button>
-      </DropdownTrigger>
-      <DropdownMenu
-        aria-label="Single selection example"
-        variant="flat"
-        disallowEmptySelection
+    <div className="flex justify-between gap-3">
+      <Select
+        variant="bordered"
+        placeholder="Filter by status"
+        className="max-w-xs"
         selectionMode="single"
-        selectedKeys={selectedKeys}
-        onSelectionChange={setSelectedKeys}
+        onSelectionChange={(value) => handleChange(value as Set<Key>)}
       >
-        <DropdownItem key="text">Text</DropdownItem>
-        <DropdownItem key="number">Number</DropdownItem>
-        <DropdownItem key="date">Date</DropdownItem>
-        <DropdownItem key="single_date">Single Date</DropdownItem>
-        <DropdownItem key="iteration">Iteration</DropdownItem>
-      </DropdownMenu>
-    </Dropdown>
-  );
+        <SelectItem key="">All</SelectItem>
+        <SelectItem key="OPEN">Open</SelectItem>
+        <SelectItem key="CLOSED">Closed</SelectItem>
+        <SelectItem key="IN_PROGRESS">In Progress</SelectItem>
+      </Select>
+      <Button
+        variant="solid"
+        radius="sm"
+        color="danger">
+        <Link href="/issues/new-issue">
+          New Issue
+        </Link>
+      </Button>
+    </div>
+  )
 }

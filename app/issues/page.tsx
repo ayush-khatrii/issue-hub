@@ -9,7 +9,6 @@ interface PROPS {
   }
 }
 export default async function Issues({ searchParams }: PROPS) {
-  console.log(searchParams);
   const allIssues = await prisma.issue.findMany({
     where: {
       status: searchParams.status
