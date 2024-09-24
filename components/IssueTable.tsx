@@ -5,6 +5,7 @@ import IssueBadge from "@/components/IssueBadge";
 import Link from "next/link";
 import { Issue, Status } from "@prisma/client";
 import { FaArrowUpLong } from "react-icons/fa6";
+import CustomPagination from "./Pagination";
 
 
 export interface IssueQuery {
@@ -15,7 +16,9 @@ export interface IssueQuery {
 
 interface Props {
   searchParams: IssueQuery,
-  issues: Issue[]
+  issues: Issue[],
+  total: number,
+  initialPage: number
 }
 
 export const column: { label: string, value: keyof Issue }[] = [
@@ -32,48 +35,53 @@ export const column: { label: string, value: keyof Issue }[] = [
     value: "createdAt"
   }
 ]
-export default function IssueTable({ issues, searchParams }: Props) {
+export default function IssueTable({ issues, searchParams, total, initialPage }: Props) {
 
 
   return (
-    <Table
-      aria-label="Issue table"
-      classNames={{
-        base: "max-w-full",
-        table: "min-w-full",
-        tr: "hover:bg-default-100 transition-colors",
-        th: "bg-default-200 text-default-600 font-semibold",
-        td: "py-3 px-4",
-      }}
-    >
-      <TableHeader>
-        {
-          column?.map((item) => (
-            <TableColumn key={item.value}>
-              <Link className="font-bold flex items-center text-center text-base" href={
-                { query: { ...searchParams, orderBy: item.value } }
-              }>{item.label}
-                {item.value === searchParams.orderBy && < FaArrowUpLong size="10" />}
-              </Link>
-            </TableColumn>
-          ))
-        }
-      </TableHeader>
-      <TableBody>
-        {issues.map((issue: Issue) => (
-          <TableRow key={issue.id}>
-            <TableCell>
-              <Link href={`/issues/${issue.id}`} className="text-primary hover:underline">
-                {issue.title}
-              </Link>
-            </TableCell>
-            <TableCell>
-              <IssueBadge status={issue.status} />
-            </TableCell>
-            <TableCell>{issue.createdAt.toDateString()}</TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table >
+    <section className="flex items-end flex-col gap-3">
+      <Table
+        aria-label="Issue table"
+        classNames={{
+          base: "max-w-full",
+          table: "min-w-full",
+          tr: "hover:bg-default-100 transition-colors",
+          th: "bg-default-200 text-default-600 font-semibold",
+          td: "py-3 px-4",
+        }}
+      >
+        <TableHeader>
+          {
+            column?.map((item) => (
+              <TableColumn key={item.value}>
+                <Link className="font-bold flex items-center text-center text-base" href={
+                  { query: { ...searchParams, orderBy: item.value } }
+                }>{item.label}
+                  {item.value === searchParams.orderBy && < FaArrowUpLong size="10" />}
+                </Link>
+              </TableColumn>
+            ))
+          }
+        </TableHeader>
+        <TableBody>
+          {issues.map((issue: Issue) => (
+            <TableRow key={issue.id}>
+              <TableCell>
+                <Link href={`/issues/${issue.id}`} className="text-primary hover:underline">
+                  {issue.title}
+                </Link>
+              </TableCell>
+              <TableCell>
+                <IssueBadge status={issue.status} />
+              </TableCell>
+              <TableCell>{issue.createdAt.toDateString()}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table >
+      <div>
+        <CustomPagination total={total} initialPage={initialPage} />
+      </div>
+    </section>
   );
 }
