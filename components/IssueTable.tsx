@@ -3,28 +3,61 @@ import React from "react";
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/react";
 import IssueBadge from "@/components/IssueBadge";
 import Link from "next/link";
-import { Issue } from "@prisma/client";
+import { Issue, Status } from "@prisma/client";
+import { FaArrowUpLong } from "react-icons/fa6";
 
-export default function IssueTable({ issues }: { issues: Issue[] }) {
+
+export interface IssueQuery {
+  status: Status;
+  orderBy: keyof Issue;
+  page: string;
+}
+
+interface Props {
+  searchParams: IssueQuery,
+  issues: Issue[]
+}
+
+export const column: { label: string, value: keyof Issue }[] = [
+  {
+    label: "Issue",
+    value: "title"
+  },
+  {
+    label: "Status",
+    value: "status"
+  },
+  {
+    label: "Created",
+    value: "createdAt"
+  }
+]
+export default function IssueTable({ issues, searchParams }: Props) {
+
+
   return (
     <Table
       aria-label="Issue table"
       classNames={{
         base: "max-w-full",
         table: "min-w-full",
-        thead: "bg-default-100",
-        tbody: "divide-y divide-default-200",
         tr: "hover:bg-default-100 transition-colors",
         th: "bg-default-200 text-default-600 font-semibold",
         td: "py-3 px-4",
       }}
-      shadow="sm"
-    // bordered
     >
       <TableHeader>
-        <TableColumn>ISSUE</TableColumn>
-        <TableColumn>STATUS</TableColumn>
-        <TableColumn>CREATED AT</TableColumn>
+        {
+          column?.map((item) => (
+            <TableColumn key={item.value}>
+              <Link className="font-bold flex items-center text-center text-base" href={
+                { query: { ...searchParams, orderBy: item.value } }
+              }>{item.label}
+                {item.value === searchParams.orderBy && < FaArrowUpLong size="10" />}
+              </Link>
+            </TableColumn>
+          ))
+        }
       </TableHeader>
       <TableBody>
         {issues.map((issue: Issue) => (
@@ -41,6 +74,6 @@ export default function IssueTable({ issues }: { issues: Issue[] }) {
           </TableRow>
         ))}
       </TableBody>
-    </Table>
+    </Table >
   );
 }
