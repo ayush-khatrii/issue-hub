@@ -1,9 +1,12 @@
-"use client";
-export default function Dashboard({ searchParams }: { searchParams: { page?: string } }) {
+import LatestIssues from "@/components/LatestIssues";
+export default function Dashboard() {
 
   return (
-    <>
-      <div className="my-20">Dashboard page</div>
-    </>
+    <section className="flex flex-col md:flex-row my-10 justify-between items-center">
+      <div>
+        Bar chart
+      </div>
+      <LatestIssues />
+    </section>
   );
 }
