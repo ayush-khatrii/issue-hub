@@ -5,53 +5,54 @@ import Link from "next/link";
 import IssueBadge from "./IssueBadge";
 import Image from "next/image";
 
-// Extend the Issue interface to include the assignedToUser field
 interface IssueWithUser extends Issue {
   assignedToUser: User | null;
 }
 
 interface PROPS {
-  issues: IssueWithUser[]; // Update the type to reflect the extended Issue with assignedToUser
+  issues: IssueWithUser[];
 }
 
 const LatestIssueTable = ({ issues }: PROPS) => {
+
   return (
-    <div>
+    <div className="">
       <Table
         removeWrapper
         aria-label="Latest Issues Table"
         classNames={{
-          base: "w-full",
-          table: "w-full",
-          th: "bg-zinc-50 text-xl font-bold text-zinc-700 font-medium text-left py-2 px-4 border-b border-zinc-200",
+          base: "max-w-full border rounded-lg shadow-md border-gray-300",
+          table: "min-w-full border-collapse",
+          tr: "hover:bg-gray-100 transition-colors",
+          th: "bg-gray-50 text-gray-800 text-lg font-semibold text-left py-3 px-5 border-b border-gray-300",
+          td: "py-3 px-5 text-gray-700 border-b border-gray-300",
         }}
       >
         <TableHeader>
-          <TableColumn>Latest Issues</TableColumn>
+          <TableColumn className="text-left">Latest Issues</TableColumn>
         </TableHeader>
         <TableBody>
-          {issues?.map((issue) => (
-            <TableRow key={issue.id} className="hover:bg-zinc-100">
-              <TableCell className="py-4 px-2">
-                <div className="flex justify-between items-center w-full">
-                  <div>
-                    <Link href={`/issues/${issue.id}`} className="font-normal text-zinc-900 hover:underline">
+          {issues.map((issue) => (
+            <TableRow key={issue.id} className="hover:bg-gray-100 transition-all duration-200">
+              <TableCell className="py-3 px-4">
+                <div className="flex justify-between items-center w-full space-x-4">
+                  <div className="flex-1">
+                    <Link href={`/issues/${issue.id}`} className="text-base text-gray-900 hover:underline">
                       {issue.title}
                     </Link>
-                    <div className="text-sm text-zinc-500">
+                    <div className="text-gray-500 mt-1">
                       <IssueBadge status={issue.status} />
                     </div>
                   </div>
 
-                  {/* Render the assigned user's avatar if it exists */}
                   {issue.assignedToUser?.image && (
-                    <div className="flex items-center ml-4">
+                    <div className="flex items-center pl-10">
                       <Image
                         src={issue.assignedToUser.image}
                         alt={issue.assignedToUser.name || ""}
-                        width={40}
-                        height={40}
-                        className="rounded-full"
+                        width={32}
+                        height={32}
+                        className="rounded-full shadow-sm"
                       />
                     </div>
                   )}
