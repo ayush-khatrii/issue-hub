@@ -2,7 +2,6 @@ import prisma from '@/prisma/client'
 import { notFound } from 'next/navigation';
 import React, { cache } from 'react'
 import IssueDetails from '../_components/IssueDetails';
-import { Metadata } from 'next';
 
 type Props = {
   params: { id: string }
