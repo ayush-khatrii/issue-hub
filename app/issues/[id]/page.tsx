@@ -2,6 +2,7 @@ import prisma from '@/prisma/client'
 import { notFound } from 'next/navigation';
 import React, { cache } from 'react'
 import IssueDetails from '../_components/IssueDetails';
+import { Metadata } from 'next';
 
 type Props = {
   params: { id: string }
@@ -24,4 +25,17 @@ export default async function SingleIssuePage({ params }: Props) {
       <IssueDetails issue={issue} user={user?.email} />
     </section>
   )
+}
+
+export async function generateMetadata({ params }: Props) {
+  const issue = await prisma.issue.findUnique({
+    where: {
+      id: parseInt(params.id)
+    }
+  });
+
+  return {
+    title: issue?.title,
+    description: `Description of ${issue?.id}`
+  }
 }

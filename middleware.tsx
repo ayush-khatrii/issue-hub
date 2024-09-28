@@ -12,10 +12,9 @@ export default auth((req) => {
 
   if (isLoggedIn &&
     nextUrl.pathname === '/sign-in' ||
-    nextUrl.pathname === '/sign-up' ||
-    nextUrl.pathname === '/'
+    nextUrl.pathname === '/sign-up'
   ) {
-    return NextResponse.redirect(new URL('/dashboard', nextUrl.origin));
+    return NextResponse.redirect(new URL('/', nextUrl.origin));
   }
   if (!isLoggedIn && isProtectedRoute) {
     // Redirect to sign-in if trying to access a protected route while not logged in
@@ -24,7 +23,7 @@ export default auth((req) => {
 
   if (isLoggedIn && nextUrl.pathname === '/sign-in') {
     // Redirect to dashboard if trying to access sign-in while logged in
-    return NextResponse.redirect(new URL('/dashboard', nextUrl.origin));
+    return NextResponse.redirect(new URL('/', nextUrl.origin));
   }
 
   // Allow all other requests to proceed

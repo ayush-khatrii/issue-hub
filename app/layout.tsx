@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import "./globals.css";
 import { Poppins } from "next/font/google"
 import NavBar from "@/app/NavBar";
@@ -11,10 +10,6 @@ const poppins = Poppins({
   variable: '--font-poppins',
 });
 
-export const metadata: Metadata = {
-  title: "Dev Track - Track issues with your devs",
-  description: "The best place to track issues with your devs",
-};
 
 export default function RootLayout({
   children,

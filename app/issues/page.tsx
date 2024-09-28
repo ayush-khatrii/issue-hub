@@ -3,6 +3,7 @@ import prisma from "@/prisma/client";
 import IssueActions from "@/components/IssueActions";
 import { Status } from "@prisma/client";
 import { column } from "@/constants";
+import { Metadata } from "next";
 
 interface PROPS {
   searchParams: IssueQuery
@@ -40,3 +41,8 @@ export default async function Issues({ searchParams }: PROPS) {
     </>
   )
 }
+
+export const metadata: Metadata = {
+  title: "Issue Board - Issue List",
+  description: "View all of your issues",
+};

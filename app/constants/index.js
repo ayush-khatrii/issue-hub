@@ -1,7 +1,7 @@
 export const navLinks = [
   {
     name: "Dashboard",
-    href: "/dashboard",
+    href: "/",
   },
   {
     name: "Issues",
