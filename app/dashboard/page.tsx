@@ -12,9 +12,9 @@ export default async function Dashboard() {
   ]);
 
   return (
-    <section className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
       <div className="py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 px-5">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="">
             <LatestIssues />
           </div>
