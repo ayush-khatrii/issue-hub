@@ -15,6 +15,7 @@ export default function IssueBadge({ status }: { status: Status }) {
   return (
     <Chip
       variant='flat'
+      size='sm'
       key={status}
       color={issueStatusMap[status].color}
     >

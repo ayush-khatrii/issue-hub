@@ -37,7 +37,7 @@ const LatestIssueTable = ({ issues }: PROPS) => {
               <TableCell className="py-3 px-4">
                 <div className="flex justify-between items-center w-full space-x-4">
                   <div className="flex-1">
-                    <Link href={`/issues/${issue.id}`} className="text-base text-gray-900 hover:underline">
+                    <Link href={`/issues/${issue.id}`} className="text-sm text-gray-900 hover:underline">
                       {issue.title}
                     </Link>
                     <div className="text-gray-500 mt-1">

@@ -1,4 +1,4 @@
-import { Card, Chip } from "@nextui-org/react"
+import { Card } from "@nextui-org/react"
 import { Status } from "@prisma/client"
 import Link from "next/link"
 
@@ -14,20 +14,23 @@ const IssueSummary = ({ open, inProgress, closed }: PROPS) => {
     status: Status
   }[] = [
       { label: "Open Issues", value: open, status: "OPEN" },
+      { label: "Closed Issues", value: closed, status: "CLOSED" },
       { label: "In Progress Issues ", value: inProgress, status: "IN_PROGRESS" },
-      { label: "Closed Issues", value: closed, status: "CLOSED" }
     ]
   return (
-    <section>
-      <div className="flex justify-center w-full gap-5 items-center">
+    <section className="max-w-6xl mx-auto my-10">
+      <h2 className="text-xl font-semibold mb-4">Issue Summary</h2>
+      <div className="flex gap-3 flex-col">
         {
           allStatuses.map((item, index) => (
-            <Link href={`/issues?status=${item.status}`}>
-              <Card key={index} className="px-5 py-3">
-                <h1 className="text-xl">{item.label}</h1>
-                <p className="text-2xl font-medium mt-1">{item.value}</p>
-              </Card>
-            </Link>
+            <Link href={`/issues?status=${item.status}`} key={index}>
+              <div className="flex flex-wrap md:flex-row justify-between w-full items-center gap-10 border border-zinc-300 dark:border-zinc-600 rounded-lg p-5">
+                <h1>
+                  {item.label}
+                </h1>
+                <p className="text-xl font-bold mt-1">{item.value}</p>
+              </div>
+            </Link> 
           ))
         }
       </div>
@@ -35,4 +38,4 @@ const IssueSummary = ({ open, inProgress, closed }: PROPS) => {
   )
 }
 
-export default IssueSummary
+export default IssueSummary;
