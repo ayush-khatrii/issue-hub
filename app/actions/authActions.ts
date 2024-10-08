@@ -5,5 +5,5 @@ export async function handleSignOut() {
   await signOut({ redirectTo: "/sign-in" });
 }
 export async function handleGitHubSignIn() {
-  await signIn("github", { redirectTo: "/dashboard" });
+  await signIn("github", { redirectTo: "/" });
 }
