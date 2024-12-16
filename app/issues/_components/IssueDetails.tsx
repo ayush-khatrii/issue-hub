@@ -6,6 +6,7 @@ import { MdPreview } from 'md-editor-rt';
 import EditIssue from '@/app/issues/_components/EditIssue';
 import DeleteIssue from '@/app/issues/_components/DeleteIssue';
 import { Issue, User } from '@prisma/client';
+import ChangeIssueStatus from './ChangeIssueStatus';
 
 interface PROPS {
   issue: Issue;
@@ -35,6 +36,7 @@ export default function IssueDetails({ issue, user }: PROPS) {
       </div>
       <div className="flex gap-3 flex-shrink-0 flex-col w-full md:w-auto">
         <AssignIssue issue={issue} />
+        <ChangeIssueStatus id={issue.id} />
         <EditIssue id={issue.id} />
         <DeleteIssue id={issue.id} />
       </div>

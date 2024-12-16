@@ -9,6 +9,7 @@ import { z } from "zod";
 import { createIssueSchema } from "@/app/validationSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ErrorMessage from "@/components/ErrorMessage";
+import ChangeIssueStatus from "./ChangeIssueStatus";
 
 type Inputs = z.infer<typeof createIssueSchema>;
 
@@ -26,17 +27,23 @@ export default function IssueForm({ id }: { id?: number }) {
           console.log(data);
           try {
             if (id) {
-              await fetch(`/api/issues/${id}`, {
+              const resp = await fetch(`/api/issues/${id}`, {
                 method: "PATCH",
                 body: JSON.stringify(data),
               });
+              if (!resp.ok) {
+                throw new Error("Error while updating issue")
+              }
               toast.success("Issue updated successfully");
             }
             else {
-              await fetch("/api/issues", {
+              const resp = await fetch("/api/issues", {
                 method: "POST",
                 body: JSON.stringify(data),
               });
+              if (!resp.ok) {
+                throw new Error("Error while creating issue");
+              }
               toast.success("Issue created successfully");
             }
             router.push("/issues");
@@ -62,6 +69,10 @@ export default function IssueForm({ id }: { id?: number }) {
                 {errors.title.message}
               </ErrorMessage>}
             </div>
+            {/* <div className="w-full">
+              <h1 className="text-base font-bold mb-2">Issue Status</h1>
+              <ChangeIssueStatus id={id} />
+            </div> */}
             <div className="">
               <h1 className="text-base font-bold mb-2">Issue Description</h1>
               <Tabs>

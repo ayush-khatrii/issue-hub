@@ -11,9 +11,12 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     const body = await req.json();
+
     const validatedData = editIssueSchema.safeParse(body);
 
-    const { assignedToUserId, title, description } = body;
+    const { assignedToUserId, title, description, status } = body;
+
+    console.log(status);
 
     if (!validatedData.success) {
       return NextResponse.json(validatedData.error.format(), { status: 400 });
@@ -48,7 +51,8 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
       data: {
         title,
         description,
-        assignedToUserId
+        assignedToUserId,
+        status
       }
     });
     return NextResponse.json(updatedIssue, { status: 200 });
