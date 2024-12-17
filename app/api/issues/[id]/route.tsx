@@ -1,6 +1,7 @@
 import { editIssueSchema } from "@/app/validationSchemas";
 import { auth } from "@/auth";
 import prisma from "@/prisma/client";
+import { errorResponse, successResponse } from "@/utils/apiResponse";
 import { NextRequest, NextResponse } from "next/server";
 
 // Patch route for updating an issue
@@ -8,18 +9,14 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
   try {
     const session = await auth();
     if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return errorResponse("You must be logged in to update issue", 401);
     }
     const body = await req.json();
-
     const validatedData = editIssueSchema.safeParse(body);
-
     const { assignedToUserId, title, description, status } = body;
 
-    console.log(status);
-
     if (!validatedData.success) {
-      return NextResponse.json(validatedData.error.format(), { status: 400 });
+      return errorResponse("Invalid data", 400, validatedData.error.format());
     }
 
     if (assignedToUserId) {
@@ -30,7 +27,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
       });
 
       if (!foundUser) {
-        return NextResponse.json({ error: "Invalid user" }, { status: 404 });
+        return errorResponse("User not found", 404);
       }
     }
 
@@ -40,7 +37,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
       }
     });
     if (!issue) {
-      return NextResponse.json({ error: "Issue not found" }, { status: 404 });
+      return errorResponse("Issue not found", 404);
     }
 
     // update issue
@@ -55,13 +52,10 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
         status
       }
     });
-    return NextResponse.json(updatedIssue, { status: 200 });
+    return successResponse(updatedIssue, 200);
   } catch (error) {
-    console.log(error);
-    return NextResponse.json(
-      { error: error },
-      { status: 500 }
-    );
+    console.error(error);
+    return errorResponse("An unexpected server error occurred.", 500);
   }
 }
 
@@ -69,7 +63,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
 export async function DELETE(req: NextRequest) {
   const session = await auth();
   if (!session) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return errorResponse("You must be logged in to delete issue", 401);
   }
   try {
     const body = await req.json();
@@ -78,10 +72,8 @@ export async function DELETE(req: NextRequest) {
         id: body.id
       }
     });
-    return NextResponse.json(deletedIssue, { status: 200 });
+    return successResponse(deletedIssue, 200);
   } catch (error) {
-    return NextResponse.json(`Server Error: ${error}`, {
-      status: 500,
-    })
+    return errorResponse("An unexpected server error occurred.", 500);
   }
 }

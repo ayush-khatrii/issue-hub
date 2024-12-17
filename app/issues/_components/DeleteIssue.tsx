@@ -1,4 +1,5 @@
 "use client"
+import { handleApiError } from '@/utils/handleApiError';
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from '@nextui-org/react'
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
@@ -17,8 +18,8 @@ export default function DeleteIssue({ id }: { id: number }) {
         method: 'DELETE',
         body: JSON.stringify({ id }),
       });
-      const result = await response.json();
-      console.log(result);
+      await handleApiError(response);
+      await response.json();
       toast.success("Issue created successfully");
       router.push("/issues");
       router.refresh();

@@ -1,7 +1,7 @@
 import { Select, SelectItem } from "@nextui-org/react"
-import { Issue } from "@prisma/client";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { handleApiError } from "@/utils/handleApiError";
 
 const ChangeIssueStatus = ({
   id,
@@ -12,6 +12,7 @@ const ChangeIssueStatus = ({
 }) => {
   const [loading, setLoading] = useState(false);
 
+
   const handleChangeIssueStatus = async (value: "OPEN" | "CLOSED" | "IN_PROGRESS") => {
     try {
       setLoading(true);
@@ -20,21 +21,15 @@ const ChangeIssueStatus = ({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          status: value
-        }),
+        body: JSON.stringify({ status: value }),
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to update the issue status");
-      }
-
+      await handleApiError(response);
       toast.success(`Issue status changed to ${value}`);
       onStatusChange(value);
-
-    } catch (error) {
-      console.error("An error occurred while changing the issue status:", error);
-      toast.error("Failed to update issue status");
+    } catch (error: any) {
+      console.error("Error:", error);
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }

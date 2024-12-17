@@ -6,6 +6,7 @@ import { Issue, User } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import SelectSkeleton from "@/components/SelectSkeleton";
 import toast from "react-hot-toast";
+import { handleApiError } from "@/utils/handleApiError";
 
 export default function AssignIssue({ issue }: { issue: Issue }) {
   const [selectedUserId, setSelectedUserId] = useState<string | null>(issue.assignedToUserId);
@@ -38,16 +39,12 @@ export default function AssignIssue({ issue }: { issue: Issue }) {
           assignedToUserId: value || null,
         }),
       });
-
-      if (!response.ok) {
-        throw new Error("Failed to update the issue assignment");
-      }
-
+      await handleApiError(response);
       setSelectedUserId(value || null);
       toast.success(`Issue ${value ? "assigned" : "unassigned"} successfully`);
-    } catch (error) {
+    } catch (error: any) {
       console.error("An error occurred while updating the issue:", error);
-      toast.error("Failed to update issue assignment");
+      toast.error(error.message);
     }
   };
 
