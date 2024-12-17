@@ -7,6 +7,7 @@ import EditIssue from '@/app/issues/_components/EditIssue';
 import DeleteIssue from '@/app/issues/_components/DeleteIssue';
 import { Issue, User } from '@prisma/client';
 import ChangeIssueStatus from './ChangeIssueStatus';
+import { useState } from 'react';
 
 interface PROPS {
   issue: Issue;
@@ -14,12 +15,13 @@ interface PROPS {
 }
 
 export default function IssueDetails({ issue, user }: PROPS) {
+  const [currentStatus, setCurrentStatus] = useState(issue.status)
   return (
     <section className="flex my-10 flex-col md:flex-row justify-between items-start  gap-5">
       <div className="flex-1">
         <h1 className="text-3xl font-bold">{issue.title}</h1>
         <div className="flex justify-start flex-col md:flex-row font-normal items-start py-5 gap-3">
-          <IssueBadge status={issue.status} />
+          <IssueBadge status={currentStatus} />
           <p className="flex justify-center items-center gap-1">
             <MdOutlineDateRange size={18} /> {issue.createdAt.toDateString()}
           </p>
@@ -36,7 +38,7 @@ export default function IssueDetails({ issue, user }: PROPS) {
       </div>
       <div className="flex gap-3 flex-shrink-0 flex-col w-full md:w-auto">
         <AssignIssue issue={issue} />
-        <ChangeIssueStatus id={issue.id} />
+        <ChangeIssueStatus id={issue.id} onStatusChange={setCurrentStatus} />
         <EditIssue id={issue.id} />
         <DeleteIssue id={issue.id} />
       </div>
