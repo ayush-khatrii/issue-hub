@@ -19,7 +19,6 @@ export default function DeleteIssue({ id }: { id: number }) {
         body: JSON.stringify({ id }),
       });
       await handleApiError(response);
-      await response.json();
       toast.success("Issue created successfully");
       router.push("/issues");
       router.refresh();
